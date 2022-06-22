@@ -1,27 +1,31 @@
 .Wrapper {
     position: relative;
-    top: 10px;
-    width: calc( 100% - 10px);
-    height: 80px;
+    width: calc( 100%);
+    height: auto;
     background-color: rgb(215, 225, 255);
     display: flex;
     justify-content: space-between;
-    padding: 0 5px;
+    padding: 15px 5px 10px;
     margin-bottom: 20px;
     align-items: center;
     flex-wrap: wrap;
     h1 {
         color: rgb(0, 57, 107);
-        line-height: 50px;
-        width: 150px;
+        line-height: 30px;
+        width: 140px;
+        font-size: 28px;
+        margin-right: 10px;
     }
     ul {
         //   width: calc(100% - 600px);
-        width: 400px;
+        width: auto;
         display: flex;
         justify-content: space-around;
         align-items: center;
+        flex-wrap: wrap;
         a {
+            width: auto;
+            margin-left: 20px;
             display: block;
             line-height: 30px;
             color: gray;
@@ -33,12 +37,14 @@
         }
     }
     .searchWrapper {
-        width: 300px;
+        width: 350px;
         display: flex;
         align-items: center;
+        margin-top: 10px;
     }
-    @media screen and(max-width:710px) {
-        height: 120px;
+    @media screen and(max-width:750px) {
+        justify-content: space-evenly;
+        flex-direction: column;
         ul {
             width: 100%;
             li:first-child {

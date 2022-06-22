@@ -61,6 +61,6 @@ export const {
   setRedirect,
   setRedirectState,
   setRedirectURL,
-} = commonSlice.actions; //commonState??
+} = commonSlice.actions;
 
 export default commonSlice.reducer;

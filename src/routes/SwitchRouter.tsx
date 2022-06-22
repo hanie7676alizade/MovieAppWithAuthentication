@@ -36,4 +36,4 @@ function SwitchRouter() {
   );
 }
 
-export default WithRedirect(withLayout(SwitchRouter));
+export default WithRedirect(SwitchRouter);

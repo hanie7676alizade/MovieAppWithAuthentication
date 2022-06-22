@@ -1,34 +1,35 @@
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment } from "react";
 import { useNavigate } from "react-router";
 
 import classes from "./MovieCard.module.scss";
-import EditIcon from "assets/icons/edit-gray.svg";
-import notCheckedTag from "assets/icons/notCheckedTag.svg";
-import checkedTag from "assets/icons/checkedTag.svg";
 import { useAppSelector } from "redux/hooks";
-import defaultImage from "assets/icons/defaultAvatar.svg";
-import { Link } from "react-router-dom";
 import Button from "../Button";
-import { IMovie } from "types";
+import { IMovie } from "types/types";
 
-const MovieCard = (props: IMovie) => {
-  let currentUserId = 1;
+interface Iprops extends IMovie {
+  onDelete: (id: string) => void;
+}
+const MovieCard = (props: Iprops) => {
+  let currentUserEmail = useAppSelector((state) => state.Auth.email);
   const navigate = useNavigate();
 
   const editMovie = () => {
-    navigate("/edit-movie");
+    navigate(`/edit-movie/${props.id}`);
+  };
+  const navigateToMoviePage = () => {
+    navigate(`/movie/${props.id}`);
   };
   const deleteMovie = () => {
-    console.log("delete");
+    props.onDelete(props.id.toString());
   };
   return (
     <div className={classes.cardWrapper}>
       <div>
-        <h2>{props.title}</h2>
-        <p>{props.genre}</p>
+        <h2>{props.name}</h2>
+        <p>{props.description}</p>
       </div>
       <div className={classes.btnWrapper}>
-        {currentUserId === props.ownerId && (
+        {currentUserEmail === props.creator && (
           <Fragment>
             <Button onClick={deleteMovie} theme="warrning">
               Delete
@@ -38,7 +39,7 @@ const MovieCard = (props: IMovie) => {
             </Button>
           </Fragment>
         )}
-        <Button>View Details </Button>
+        <Button onClick={navigateToMoviePage}>View Details </Button>
       </div>
     </div>
   );

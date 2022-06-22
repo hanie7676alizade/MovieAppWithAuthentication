@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./Button.module.scss";
-import { IButtonProps } from "types";
+import { IButtonProps } from "types/types";
 
 interface Iprops extends IButtonProps {
   theme?: "warrning" | "info";

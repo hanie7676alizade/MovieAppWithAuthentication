@@ -6,3 +6,8 @@ export const getBase64 = (file: Blob) => {
     reader.onerror = (error) => reject(error);
   });
 };
+
+
+export const isAuth = () => {
+  return !!localStorage.getItem("Mtoken")?.length;
+};
