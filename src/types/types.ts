@@ -4,6 +4,16 @@ export interface IInputProps
 export interface IButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
+export interface IButtonEvent extends React.MouseEvent<HTMLButtonElement> {}
+
+export interface IpopUpBTN {
+  value: string;
+  color?: string;
+  isCloseBTN?: boolean;
+  onClick: () => void;
+}
+
+
 export interface IFormValues {
   creator: string;
   id: number;

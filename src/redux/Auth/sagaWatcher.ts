@@ -1,8 +1,9 @@
 import { takeEvery } from "redux-saga/effects";
 import * as sagas from "./sagas";
-import { loginUser, registerUser } from "./slice";
+import * as actions from "./slice";
 
 export default function* commonSagaWatcher() {
-  yield takeEvery(registerUser.type, sagas.registerSaga);
-  yield takeEvery(loginUser.type, sagas.loginSaga);
+  yield takeEvery(actions.registerUser.type, sagas.registerSaga);
+  yield takeEvery(actions.loginUser.type, sagas.loginSaga);
+  yield takeEvery(actions.logoutUser.type, sagas.logoutSaga);
 }

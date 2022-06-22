@@ -1,6 +1,6 @@
 import { put } from "redux-saga/effects";
 
-import { setLoading, setRedirect } from "../Common/slice";
+import { setAlert, setLoading, setRedirect } from "../Common/slice";
 
 import axios from "../../axiosInstance";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -25,9 +25,23 @@ export function* registerSaga(
 
     yield localStorage.setItem("email", userData.email.toString());
     yield localStorage.setItem("Mtoken", result.data.access_token);
+    yield put(
+      setAlert({
+        state: true,
+        text: "Welcome to my Movie App :)",
+        color: "success",
+      })
+    );
     yield put(setRedirect({ state: true, url: "/" }));
   } catch (err) {
     console.error("sagaERR registerSaga", err);
+    yield put(
+      setAlert({
+        state: true,
+        text: "Something Wrong!",
+        color: "danger",
+      })
+    );
   } finally {
     yield put(setLoading(false));
   }
@@ -47,9 +61,45 @@ export function* loginSaga(action: PayloadAction<IUserLoginForm>): Generator {
 
     yield localStorage.setItem("email", userData.email.toString());
     yield localStorage.setItem("Mtoken", result.data.access_token);
+    yield put(
+      setAlert({
+        state: true,
+        text: "Welcome to my Movie App :)",
+        color: "success",
+      })
+    );
     yield put(setRedirect({ state: true, url: "/" }));
   } catch (err) {
     console.error("sagaERR registerSaga", err);
+    yield put(
+      setAlert({
+        state: true,
+        text: "Something Wrong!",
+        color: "danger",
+      })
+    );
+  } finally {
+    yield put(setLoading(false));
+  }
+}
+
+export function* logoutSaga(action: PayloadAction<IUserLoginForm>): Generator {
+  yield put(setLoading(true));
+  try {
+    yield localStorage.removeItem("email");
+    yield localStorage.removeItem("Mtoken");
+    yield put(setEmail(""));
+
+    yield put(setRedirect({ state: true, url: "/login" }));
+  } catch (err) {
+    console.error("sagaERR logoutSaga", err);
+    yield put(
+      setAlert({
+        state: true,
+        text: "Something Wrong!",
+        color: "danger",
+      })
+    );
   } finally {
     yield put(setLoading(false));
   }

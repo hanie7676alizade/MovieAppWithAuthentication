@@ -13,11 +13,13 @@ const commonSlice = createSlice({
   reducers: {
     registerUser: (state, action: PayloadAction<IUserLoginForm>) => {},
     loginUser: (state, action: PayloadAction<IUserLoginForm>) => {},
+    logoutUser: () => {},
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
   },
 });
-export const { registerUser, loginUser, setEmail } = commonSlice.actions;
+export const { registerUser, loginUser, logoutUser, setEmail } =
+  commonSlice.actions;
 
 export default commonSlice.reducer;

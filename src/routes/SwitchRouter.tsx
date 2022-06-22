@@ -4,7 +4,8 @@ import { Route, Routes } from "react-router";
 import WithRedirect from "HOC/withRedirect";
 import routeList from "./routeList";
 import Loading from "components/common/Loading";
-import withLayout from "HOC/withLayout";
+import WithPopUp from "HOC/WithPopUp";
+import WithAlert from "HOC/WithAlert";
 
 function SwitchRouter() {
   return (
@@ -36,4 +37,4 @@ function SwitchRouter() {
   );
 }
 
-export default WithRedirect(SwitchRouter);
+export default WithRedirect(WithPopUp(WithAlert(SwitchRouter)));

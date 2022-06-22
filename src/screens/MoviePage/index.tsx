@@ -2,9 +2,10 @@ import { Fragment, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentMovie } from "redux/Movie/slice";
+import { deleteMovie, getCurrentMovie } from "redux/Movie/slice";
 import { setEmail } from "redux/Auth/slice";
 import CurrentMoviePage from "components/screens/CurrentMoviePage";
+import { setPopUp } from "redux/Common/slice";
 
 const MoviePage = () => {
   const currentMovie = useAppSelector((state) => state.Movie.currentMovie);
@@ -26,7 +27,29 @@ const MoviePage = () => {
   }, [dispatch]);
 
   const deleteItem = () => {
-    console.log("delete");
+    dispatch(
+      setPopUp({
+        state: true,
+        text: "are you sure about deleting " + currentMovie?.name + " Movie ?",
+        buttons: [
+          {
+            value: "Apply",
+            color: "primary",
+            isCloseBTN: false,
+            onClick: () => {
+              dispatch(deleteMovie(currentMovie?.id.toString()));
+              dispatch(setPopUp({ state: false, text: "", buttons: [] }));
+            },
+          },
+          {
+            value: "Close",
+            color: undefined,
+            isCloseBTN: true,
+            onClick: () => {},
+          },
+        ],
+      })
+    );
   };
 
   const navigateToEditPage = () => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -28,11 +28,21 @@ const EditMoviePage = () => {
   }, [params.id]);
 
   const submitForm = (data: IFormValues) => {
-    currentMovie?.id && dispatch(editMovie({ ...data, id: currentMovie?.id }));
+    if (
+      currentMovie?.name !== data.name ||
+      currentMovie.description !== data.description
+    )
+      if (currentMovie?.id)
+        dispatch(editMovie({ ...data, id: currentMovie?.id }));
   };
 
   if (currentMovie)
-    return <MovieForm onSubmit={submitForm} initValue={currentMovie} />;
+    return (
+      <Fragment>
+        <h3>Edit Movie</h3>
+        <MovieForm onSubmit={submitForm} initValue={currentMovie} />
+      </Fragment>
+    );
   return null;
 };
 export default EditMoviePage;

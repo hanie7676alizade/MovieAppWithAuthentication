@@ -4,7 +4,7 @@ import classes from "./HomePage.module.scss";
 
 interface Iprops {
   movieList: IMovie[];
-  onDelete: (id: string) => void;
+  onDelete: (id: string, name: string) => void;
 }
 const MovieList = (props: Iprops) => {
   return (

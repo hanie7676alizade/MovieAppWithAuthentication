@@ -17,10 +17,10 @@ const CurrentMoviePage = (props: Iprops) => {
       <div>
         {props.email === props.currentMovie.creator && (
           <>
-            <Button theme="warrning" onClick={props.onDelete}>
+            <Button color="danger" onClick={props.onDelete}>
               Delete
             </Button>
-            <Button theme="info" onClick={props.onEdit}>
+            <Button color="warning" onClick={props.onEdit}>
               Edit
             </Button>
           </>

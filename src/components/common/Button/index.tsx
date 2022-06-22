@@ -2,22 +2,22 @@ import React from "react";
 
 import classes from "./Button.module.scss";
 import { IButtonProps } from "types/types";
+import { Button } from "reactstrap";
 
 interface Iprops extends IButtonProps {
-  theme?: "warrning" | "info";
+  color?: "danger" | "warning" | "primary";
+  outline?: boolean;
 }
-const Button: React.FC<Iprops> = (props) => {
+const ButtonComponent: React.FC<Iprops> = (props) => {
   return (
-    <button
+    <Button
       {...props}
-      className={[
-        classes.Button,
-        props.theme ? classes[props.theme] : null,
-      ].join(" ")}
+      color={props.color}
+      className={[classes.Button].join(" ")}
     >
       {props.children}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default ButtonComponent;

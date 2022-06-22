@@ -1,46 +1,75 @@
 import Button from "components/common/Button";
-import SearchBox from "components/common/SearchBox";
-import { useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "redux/hooks";
-import { setSearchText } from "redux/Movie/slice";
+import { useEffect, useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import {
+  Collapse,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+} from "reactstrap";
+import { logoutUser, setEmail } from "redux/Auth/slice";
+import { setPopUp } from "redux/Common/slice";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { isAuth } from "util/helpers";
 import classes from "./Layout.module.scss";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { email } = useAppSelector((state) => state.Auth);
+
+  let isAuthUser = isAuth();
 
   const dispatch = useAppDispatch();
-  const onSearch = () => {
-    !!inputRef.current && dispatch(setSearchText(inputRef.current.value));
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+  const logout = () => {
+    dispatch(
+      setPopUp({
+        state: true,
+        text: "Are you sure to logout?",
+        buttons: [
+          {
+            value: "Logout",
+            color: "danger",
+            isCloseBTN: false,
+            onClick: () => {
+              dispatch(logoutUser());
+            },
+          },
+          {
+            value: "Close",
+            color: undefined,
+            isCloseBTN: true,
+            onClick: () => {},
+          },
+        ],
+      })
+    );
   };
 
-  const logout = () => {
-    localStorage.removeItem("Mtoken");
-    localStorage.removeItem("email");
-    navigate("/login");
-  };
+  useEffect(() => {
+    if (!email) {
+      let emailLocalStorage = localStorage.getItem("email");
+      !!emailLocalStorage && dispatch(setEmail(emailLocalStorage));
+    }
+  }, [email]);
   return (
-    <header className={classes.Wrapper}>
-      <ul>
-        <li>
-          <h1>MovieApp</h1>
-        </li>
-        {isAuth() && (
-          <>
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-                to="/"
-                end
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
+    <Navbar color="dark" dark expand="sm" fixed="top">
+      <Nav className={classes.Wrapper}>
+        <NavItem>
+          <NavbarBrand tag={Link} to="/">
+            Movie App
+          </NavbarBrand>
+        </NavItem>
+        <NavbarToggler className="me-2" onClick={toggle} />
+        <Collapse navbar isOpen={isOpen} className={classes.collapseWrapper}>
+          {isAuth() && (
+            <NavItem>
               <NavLink
                 className={({ isActive }) =>
                   isActive ? classes.active : undefined
@@ -49,43 +78,43 @@ const Header = () => {
               >
                 add movie
               </NavLink>
-            </li>
-          </>
-        )}
-        {!isAuth() && (
-          <>
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-                to="/login"
-              >
-                login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-                to="/register"
-              >
-                register
-              </NavLink>
-            </li>
-          </>
-        )}
-      </ul>
-      <div className={classes.searchWrapper}>
-        {isAuth() && <SearchBox ref={inputRef} onChange={onSearch} />}
-        {isAuth() && (
-          <Button theme="warrning" onClick={logout}>
-            Logout
-          </Button>
-        )}
-      </div>
-    </header>
+            </NavItem>
+          )}
+          {!isAuth() && (
+            <>
+              <NavItem>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  to="/login"
+                >
+                  login
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  to="/register"
+                >
+                  register
+                </NavLink>
+              </NavItem>
+            </>
+          )}
+          {isAuth() && (
+            <NavItem>
+              <Button color="danger" onClick={logout}>
+                Logout
+              </Button>
+            </NavItem>
+          )}
+        </Collapse>
+      </Nav>
+    </Navbar>
   );
 };
 

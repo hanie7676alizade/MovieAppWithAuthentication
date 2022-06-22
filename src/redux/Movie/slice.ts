@@ -30,10 +30,11 @@ const commonSlice = createSlice({
       state.searchedText = action.payload;
     },
     getCurrentMovie: (state, action: PayloadAction<string | undefined>) => {},
-    setCurrentMovie: (state, action: PayloadAction<IMovie>) => {
+    setCurrentMovie: (state, action: PayloadAction<IMovie | null>) => {
       state.currentMovie = action.payload;
     },
     editMovie: (state, action: PayloadAction<IMovie>) => {},
+    addMovie: (state, action: PayloadAction<IMovie>) => {},
     deleteMovie: (state, action: PayloadAction<string | undefined>) => {},
   },
 });
@@ -46,6 +47,7 @@ export const {
   setCurrentMovie,
   deleteMovie,
   editMovie,
+  addMovie,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;
