@@ -47,11 +47,9 @@ const MovieForm = (props: Iprops) => {
     shouldFocusError: true,
   });
 
-  const radioBtnList = ["Action", "Cmedy", "Romance"];
+  const radioBtnList = ["Action", "Comedy", "Romance"];
 
-  console.log(errors);
-  console.log(props.initValue);
-
+  console.log(errors, "errors");
   return (
     <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.form}>
       <FormGroup className={classes.formGroup}>

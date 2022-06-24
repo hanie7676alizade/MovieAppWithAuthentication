@@ -6,6 +6,7 @@ import { editMovie, getCurrentMovie } from "redux/Movie/slice";
 import { setEmail } from "redux/Auth/slice";
 import { IFormValues } from "types/types";
 import MovieForm from "components/common/MovieForm";
+import { setAlert } from "redux/Common/slice";
 
 const EditMoviePage = () => {
   const currentMovie = useAppSelector((state) => state.Movie.currentMovie);
@@ -28,12 +29,25 @@ const EditMoviePage = () => {
   }, [params.id, currentMovie, dispatch, email, loading]);
 
   const submitForm = (data: IFormValues) => {
+    console.log({ data });
+
     if (
       currentMovie?.name !== data.name ||
-      currentMovie.description !== data.description
-    )
+      currentMovie.description !== data.description ||
+      currentMovie?.releaseDate !== data.releaseDate ||
+      currentMovie.genre !== data.genre
+    ) {
       if (currentMovie?.id)
         dispatch(editMovie({ ...data, id: currentMovie?.id }));
+    } else {
+      dispatch(
+        setAlert({
+          state: true,
+          text: "You didn't change anything",
+          color: "warning",
+        })
+      );
+    }
   };
 
   if (currentMovie)

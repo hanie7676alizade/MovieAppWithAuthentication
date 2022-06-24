@@ -6,10 +6,12 @@ const ProfilePage = () => {
   const email = useAppSelector((state) => state.Auth.email);
   return (
     <Card className={classes.Wrapper}>
-      <CardHeader> Profile Page</CardHeader>
+      <CardHeader>
+        <h1>Profile Page</h1>
+      </CardHeader>
       <CardBody>
         <CardColumns className={classes.col}>
-          <span> Email Address:</span>
+          <span> email:</span>
           <p>{email}</p>
         </CardColumns>
       </CardBody>
