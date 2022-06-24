@@ -5,28 +5,37 @@
     justify-content: space-between;
     .collapseWrapper {
         justify-content: space-between;
+        .linkWrapper {
+            display: flex;
+            flex-direction: row;
+            a {
+                width: auto;
+                margin: 10px 10px 0 !important;
+                display: block;
+                line-height: 32px !important;
+                height: 40px;
+                color: rgb(103, 103, 103);
+                text-decoration: none;
+                font-weight: 500;
+                text-align: center;
+            }
+            .active {
+                color: #ededed !important;
+            }
+        }
         button {
             display: block;
             width: fit-content;
             margin: auto;
         }
-        a {
-            width: auto;
-            margin: 10px 0 0 !important;
-            display: block;
-            line-height: 32px !important;
-            height: 40px;
-            color: rgb(103, 103, 103);
-            text-decoration: none;
-            font-weight: 500;
-            text-align: center;
-        }
-        .active {
-            color: #ededed !important;
-        }
     }
     a {
         line-height: 48px;
+    }
+    @media screen and(max-width:575px) {
+        .linkWrapper {
+            flex-direction: column !important;
+        }
     }
 }
 

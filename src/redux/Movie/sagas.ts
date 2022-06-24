@@ -90,12 +90,9 @@ export function* deleteMovieSaga(
 ): Generator {
   yield put(setLoading(true));
   try {
-    const response: any = yield axios.delete(
-      `http://127.0.0.1:8000/movies/${action.payload}`,
-      {
-        headers: getRequestHeader(),
-      }
-    );
+    yield axios.delete(`http://127.0.0.1:8000/movies/${action.payload}`, {
+      headers: getRequestHeader(),
+    });
     yield put(getMovieList());
     yield put(setRedirect({ state: true, url: "/" }));
   } catch (err: any) {
@@ -129,8 +126,11 @@ export function* editMovieSaga(action: PayloadAction<IMovie>): Generator {
     const data = {
       name: action.payload.name,
       description: action.payload.description,
+      creator: action.payload.creator,
+      genre: action.payload.genre,
+      releaseDate: action.payload.releaseDate,
     };
-    const response: any = yield axios.patch(
+    yield axios.patch(
       `http://127.0.0.1:8000/movies/${action.payload.id}`,
       data,
       {
@@ -180,14 +180,12 @@ export function* addMovieSaga(action: PayloadAction<IMovie>): Generator {
       name: action.payload.name,
       description: action.payload.description,
       creator: action.payload.creator,
+      genre: action.payload.genre,
+      releaseDate: action.payload.releaseDate,
     };
-    const response: any = yield axios.post(
-      `http://127.0.0.1:8000/movies`,
-      data,
-      {
-        headers: getRequestHeader(),
-      }
-    );
+    yield axios.post(`http://127.0.0.1:8000/movies`, data, {
+      headers: getRequestHeader(),
+    });
 
     yield put(getMovieList());
     yield put(setRedirect({ state: true, url: "/" }));

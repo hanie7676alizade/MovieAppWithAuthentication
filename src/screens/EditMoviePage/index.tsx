@@ -25,7 +25,7 @@ const EditMoviePage = () => {
       const localStorageEmail = localStorage.getItem("email");
       localStorageEmail && dispatch(setEmail(localStorageEmail));
     }
-  }, [params.id]);
+  }, [params.id, currentMovie, dispatch, email, loading]);
 
   const submitForm = (data: IFormValues) => {
     if (

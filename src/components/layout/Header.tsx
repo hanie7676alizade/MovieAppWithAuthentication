@@ -18,8 +18,6 @@ import classes from "./Layout.module.scss";
 const Header = () => {
   const { email } = useAppSelector((state) => state.Auth);
 
-  let isAuthUser = isAuth();
-
   const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -57,7 +55,7 @@ const Header = () => {
       let emailLocalStorage = localStorage.getItem("email");
       !!emailLocalStorage && dispatch(setEmail(emailLocalStorage));
     }
-  }, [email]);
+  }, [email, dispatch]);
   return (
     <Navbar color="dark" dark expand="sm" fixed="top">
       <Nav className={classes.Wrapper}>
@@ -68,43 +66,58 @@ const Header = () => {
         </NavItem>
         <NavbarToggler className="me-2" onClick={toggle} />
         <Collapse navbar isOpen={isOpen} className={classes.collapseWrapper}>
-          {isAuth() && (
-            <NavItem>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-                to="/add-movie"
-              >
-                add movie
-              </NavLink>
-            </NavItem>
-          )}
-          {!isAuth() && (
-            <>
-              <NavItem>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  to="/login"
-                >
-                  login
-                </NavLink>
-              </NavItem>
+          <div className={classes.linkWrapper}>
+            {isAuth() && (
+              <>
+                <NavItem>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                    to="/add-movie"
+                  >
+                    add movie
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                    to="/profile"
+                  >
+                    profile
+                  </NavLink>
+                </NavItem>
+              </>
+            )}
+            {!isAuth() && (
+              <>
+                <NavItem>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                    to="/login"
+                  >
+                    login
+                  </NavLink>
+                </NavItem>
 
-              <NavItem>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  to="/register"
-                >
-                  register
-                </NavLink>
-              </NavItem>
-            </>
-          )}
+                <NavItem>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                    to="/register"
+                  >
+                    register
+                  </NavLink>
+                </NavItem>
+              </>
+            )}
+          </div>
+
           {isAuth() && (
             <NavItem>
               <Button color="danger" onClick={logout}>

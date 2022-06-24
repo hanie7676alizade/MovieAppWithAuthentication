@@ -9,6 +9,8 @@ const AddMoviePage = () => {
   const emailStore = useAppSelector((state) => state.Auth.email);
   const dispatch = useAppDispatch();
   const submitForm = (data: IFormValues) => {
+    console.log({ data });
+    
     if (!emailStore) {
       let email: string | null = localStorage.getItem("email");
       !!email ? dispatch(setEmail(email)) : dispatch(logoutUser());

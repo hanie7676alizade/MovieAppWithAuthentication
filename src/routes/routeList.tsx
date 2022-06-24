@@ -1,6 +1,6 @@
-import AppLayout from "components/layout/AppLayout";
-import Header from "components/layout/Header";
 import React, { ReactNode } from "react";
+
+import AppLayout from "components/layout/AppLayout";
 
 const HomePage: React.FC = React.lazy(() => import("../screens/HomePage"));
 
@@ -14,6 +14,9 @@ const EditMoviePage: React.FC = React.lazy(
 );
 const AddMoviePage: React.FC = React.lazy(
   () => import("../screens/AddMoviePage")
+);
+const ProfilePage: React.FC = React.lazy(
+  () => import("../screens/ProfilePage")
 );
 
 interface IRoute {
@@ -56,6 +59,11 @@ const routeList: TRouteList = [
       {
         path: "add-movie",
         element: <AddMoviePage />,
+        subRoute: [],
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
         subRoute: [],
       },
     ],

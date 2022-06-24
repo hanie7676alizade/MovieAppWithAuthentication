@@ -55,6 +55,8 @@ const MoviePage = () => {
   const navigateToEditPage = () => {
     navigate(`/edit-movie/${currentMovie?.id}`);
   };
+  console.log({ currentMovie });
+  
 
   if (currentMovie)
     return (

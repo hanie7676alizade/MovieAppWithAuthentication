@@ -16,11 +16,12 @@ import classes from "./MovieForm.module.scss";
 const schema = yup
   .object({
     name: yup.string().required("this field is required"),
-
     description: yup
       .string()
       .required("this field is required")
       .min(16, "description is too short - should be 16 chars minimum."),
+    genre: yup.string().required("this field is required"),
+    releaseDate: yup.string().required("this field is required"),
   })
   .required();
 
@@ -39,10 +40,17 @@ const MovieForm = (props: Iprops) => {
     defaultValues: {
       name: props.initValue?.name,
       description: props.initValue?.description,
+      genre: props.initValue?.genre,
+      releaseDate: props.initValue?.releaseDate,
     },
     resolver: yupResolver(schema),
     shouldFocusError: true,
   });
+
+  const radioBtnList = ["Action", "Cmedy", "Romance"];
+
+  console.log(errors);
+  console.log(props.initValue);
 
   return (
     <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.form}>
@@ -56,6 +64,58 @@ const MovieForm = (props: Iprops) => {
         <FormFeedback className={classes.ErrText}>
           {errors.name?.message}
         </FormFeedback>
+      </FormGroup>
+
+      <FormGroup>
+        <Label>Genre</Label>
+        {radioBtnList.map((item) => (
+          <FormGroup check>
+            <Label check>
+              <Controller
+                name="genre"
+                control={control}
+                render={({ field }) => {
+                  console.log(
+                    props.initValue?.genre === item,
+                    props.initValue?.genre,
+                    item
+                  );
+
+                  return (
+                    <Input
+                      {...field}
+                      defaultChecked={props.initValue?.genre === item}
+                      defaultValue={props.initValue?.genre}
+                      value={item}
+                      type="radio"
+                      invalid={!!errors.genre}
+                      name="genre"
+                    />
+                  );
+                }}
+              />
+              {item}
+            </Label>
+          </FormGroup>
+        ))}
+      </FormGroup>
+      <FormGroup>
+        <Label>Realase Date</Label>
+        <Controller
+          name="releaseDate"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              onChange={onChange}
+              onBlur={onBlur}
+              value={props.initValue?.releaseDate}
+              defaultValue={props.initValue?.releaseDate}
+              invalid={!!errors.releaseDate}
+              name="releaseDate"
+              type="date"
+            />
+          )}
+        />
       </FormGroup>
       <FormGroup className={classes.formGroup}>
         <Label for="description">Description</Label>
